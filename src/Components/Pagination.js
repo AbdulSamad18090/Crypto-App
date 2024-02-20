@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-export function DefaultPagination() {
-  const [active, setActive] = useState(1);
-
-  const handleItemClick = (index) => {
-    setActive(index);
-  };
-
+export default function DefaultPagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) {
   const handleNext = () => {
-    if (active === 5) return;
-    setActive(active + 1);
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
   };
 
   const handlePrev = () => {
-    if (active === 1) return;
-    setActive(active - 1);
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
+
+  const handleItemClick = (page) => {
+    onPageChange(page);
   };
 
   return (
@@ -25,20 +29,19 @@ export function DefaultPagination() {
         variant="text"
         className="flex items-center gap-2 text-white"
         onClick={handlePrev}
-        disabled={active === 1}
+        disabled={currentPage === 1}
       >
         <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
       </Button>
       <div className="flex items-center gap-2">
-        {[1, 2, 3, 4, 5].map((item) => (
+        {[...Array(totalPages).keys()].map((page) => (
           <IconButton
-            key={item}
-            variant={active === item ? "filled" : "text"}
-            // className="text-white bg-gradient-to-r from-purple-500 to-pink-500"
+            key={page + 1}
+            variant={currentPage === page + 1 ? "filled" : "text"}
             color="white"
-            onClick={() => handleItemClick(item)}
+            onClick={() => handleItemClick(page + 1)}
           >
-            {item}
+            {page + 1}
           </IconButton>
         ))}
       </div>
@@ -46,7 +49,7 @@ export function DefaultPagination() {
         variant="text"
         className="flex items-center gap-2 text-white"
         onClick={handleNext}
-        disabled={active === 5}
+        disabled={currentPage === totalPages}
       >
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
       </Button>

@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getCoins } from "../Store/Slices/getCoinsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
-import { DefaultPagination } from "./Pagination";
 
 const Coins = () => {
   const dispatch = useDispatch();
+  const [currency, setCurrency] = useState("usd");
 
   useEffect(() => {
-    dispatch(getCoins());
-  }, [dispatch]);
+    dispatch(getCoins(currency));
+  }, [dispatch, currency]);
 
   const { coins, loading, error } = useSelector((state) => state.getCoinsSlice);
-  console.log(coins);
 
   return (
     <div className="bg-black text-white">
@@ -23,6 +22,27 @@ const Coins = () => {
         <ErrorPage error={error} />
       ) : (
         <div className="p-2">
+          <div className=" my-4">
+            <h1 className="text-yellow-500 font-bold text-[30px]">All Coins</h1>
+            <div className=" flex gap-4 mt-4">
+              <button
+                className="text-white px-1 rounded bg-gradient-to-r from-purple-500 to-pink-500"
+                onClick={() => {
+                  setCurrency("usd");
+                }}
+              >
+                USD
+              </button>
+              <button
+                className="text-white px-1 rounded bg-gradient-to-r from-purple-500 to-pink-500"
+                onClick={() => {
+                  setCurrency("pkr");
+                }}
+              >
+                PKR
+              </button>
+            </div>
+          </div>
           {coins &&
             coins.map((coin) => (
               <div
@@ -43,7 +63,7 @@ const Coins = () => {
                   <h1 className="text-gray-600">{coin.symbol}</h1>
                 </div>
                 <div className="sm:text-center text-left m-2">
-                  <h1 className="text-gray-600">USD {coin.current_price}</h1>
+                  <h1 className="text-gray-600">{currency.toUpperCase()} {coin.current_price}</h1>
                 </div>
                 <div className="text-right">
                   <h1
@@ -58,7 +78,6 @@ const Coins = () => {
                 </div>
               </div>
             ))}
-          {/* <DefaultPagination /> */}
         </div>
       )}
     </div>

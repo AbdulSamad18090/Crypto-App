@@ -3,10 +3,10 @@ import axios from "axios";
 import { BaseURL } from "../../Components/baseURL";
 
 // Define an async thunk to fetch coins
-export const getCoins = createAsyncThunk("getCoins", async () => {
+export const getCoins = createAsyncThunk("getCoins", async (currency) => {
   try {
     const response = await axios.get(
-      `${BaseURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
+      `${BaseURL}/coins/markets?vs_currency=${currency}`
     );
     return response.data;
   } catch (error) {

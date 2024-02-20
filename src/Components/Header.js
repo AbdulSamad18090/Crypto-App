@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 const Header = () => {
   return (
     <header className="bg-black text-white sticky top-0 z-50 shadow-sm shadow-gray-500">
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-between items-center px-4 py-2">
         <Link to={"/"}>
           <div className="flex justify-center items-center">
             <h1>
@@ -18,7 +18,7 @@ const Header = () => {
             <FaEthereum className="text-[20px] text-yellow-400" />
           </div>
         </Link>
-        <div className="hidden sm:flex items-center w-60 border border-gray-500 rounded">
+        <div className="hidden sm:flex items-center w-60 border border-gray-500 rounded bg-gray-200 text-black">
           <input
             type="text"
             placeholder="Search"
@@ -26,23 +26,23 @@ const Header = () => {
           />
           <CiSearch className="text-[20px] mx-2" />
         </div>
-        <div className="flex justify-center items-center transition-all">
+        <div className="flex justify-center items-center gap-4 transition-all">
           <Link
             to={"/"}
-            className="hover:text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text px-2"
+            className="hover:text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text"
           >
             Exchanges
           </Link>
           <Link
             to={"/coins"}
-            className="hover:text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text px-2"
+            className="hover:text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text"
           >
             Coins
           </Link>
         </div>
       </div>
       <div className="w-full flex justify-center">
-        <div className="sm:hidden flex items-center sm:w-60 mb-4 mx-4 w-full border border-gray-500 rounded">
+        <div className="sm:hidden flex items-center sm:w-60 mb-4 mx-4 w-full border border-gray-500 rounded bg-gray-200 text-black">
           <input
             type="text"
             placeholder="Search"
