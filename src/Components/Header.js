@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
+import { CiSearch } from "react-icons/ci";
 
 const Header = () => {
   return (
@@ -17,6 +18,14 @@ const Header = () => {
             <FaEthereum className="text-[20px] text-yellow-400" />
           </div>
         </Link>
+        <div className="hidden sm:flex items-center w-60 border border-gray-500 rounded">
+          <input
+            type="text"
+            placeholder="Search"
+            className=" w-full bg-transparent focus:outline-none px-2 py-1"
+          />
+          <CiSearch className="text-[20px] mx-2" />
+        </div>
         <div className="flex justify-center items-center transition-all">
           <Link
             to={"/"}
@@ -30,6 +39,16 @@ const Header = () => {
           >
             Coins
           </Link>
+        </div>
+      </div>
+      <div className="w-full flex justify-center">
+        <div className="sm:hidden flex items-center sm:w-60 mb-4 mx-4 w-full border border-gray-500 rounded">
+          <input
+            type="text"
+            placeholder="Search"
+            className=" w-full bg-transparent focus:outline-none px-2 py-1"
+          />
+          <CiSearch className="text-[20px] mx-2" />
         </div>
       </div>
     </header>

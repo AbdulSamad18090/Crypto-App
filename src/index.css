@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Styling for the scrollbar */
+::-webkit-scrollbar {
+  width: 6px; /* Set the width of the scrollbar */
+  background-color: rgb(35, 35, 35);
+}
+
+/* Styling for the thumb of the scrollbar */
+/* Styling for the scrollbar thumb with linear gradient */
+::-webkit-scrollbar-thumb {
+  background-image: -webkit-linear-gradient(
+    top,
+    #ab54f3,
+    #e9499d
+  ); /* Define the linear gradient */
+  border-radius: 3px;
+
+}
