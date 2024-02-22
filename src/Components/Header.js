@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchText } from "../Store/Slices/searchTextSlice";
+import { MdOutlineCancel } from "react-icons/md";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const searchText = useSelector((state) => state.searchTextSlice.searchText);
   return (
     <header className="bg-black text-white sticky top-0 z-50 shadow-sm shadow-gray-500">
       <div className="flex justify-between items-center px-4 py-2">
@@ -23,8 +28,19 @@ const Header = () => {
             type="text"
             placeholder="Search"
             className=" w-full bg-transparent focus:outline-none px-2 py-1"
+            value={searchText}
+            onChange={(e) => {
+              dispatch(setSearchText(e.target.value));
+            }}
           />
-          <CiSearch className="text-[20px] mx-2" />
+          <MdOutlineCancel
+            className={`text-[20px] mx-2 ${
+              searchText !== "" ? " cursor-pointer" : "hidden"
+            }`}
+            onClick={() => {
+              dispatch(setSearchText(""));
+            }}
+          />
         </div>
         <div className="flex justify-center items-center gap-4 transition-all">
           <Link
@@ -47,8 +63,19 @@ const Header = () => {
             type="text"
             placeholder="Search"
             className=" w-full bg-transparent focus:outline-none px-2 py-1"
+            value={searchText}
+            onChange={(e) => {
+              dispatch(setSearchText(e.target.value));
+            }}
           />
-          <CiSearch className="text-[20px] mx-2" />
+          <MdOutlineCancel
+            className={`text-[20px] mx-2 ${
+              searchText !== "" ? " cursor-pointer" : "hidden"
+            }`}
+            onClick={() => {
+              dispatch(setSearchText(""));
+            }}
+          />
         </div>
       </div>
     </header>

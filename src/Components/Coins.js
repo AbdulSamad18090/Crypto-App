@@ -14,6 +14,15 @@ const Coins = () => {
 
   const { coins, loading, error } = useSelector((state) => state.getCoinsSlice);
 
+  const searchText = useSelector((state) =>
+    state.searchTextSlice.searchText.toLowerCase()
+  );
+
+  // Filter coins based on searchText
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(searchText)
+  );
+
   return (
     <div className="bg-black text-white">
       {loading ? (
@@ -43,8 +52,14 @@ const Coins = () => {
               </button>
             </div>
           </div>
-          {coins &&
-            coins.map((coin) => (
+          {filteredCoins.length === 0 ? (
+            <div className="flex justify-center items-center">
+              <h1 className="text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
+                No Exchanges
+              </h1>
+            </div>
+          ) : (
+            filteredCoins.map((coin) => (
               <div
                 key={coin.id}
                 className="grid sm:grid-cols-4 grid-cols-2 justify-between items-center border border-gray-600 rounded p-2 my-2 shadow-sm shadow-gray-500"
@@ -63,7 +78,9 @@ const Coins = () => {
                   <h1 className="text-gray-600">{coin.symbol}</h1>
                 </div>
                 <div className="sm:text-center text-left m-2">
-                  <h1 className="text-gray-600">{currency.toUpperCase()} {coin.current_price}</h1>
+                  <h1 className="text-gray-600">
+                    {currency.toUpperCase()} {coin.current_price}
+                  </h1>
                 </div>
                 <div className="text-right">
                   <h1
@@ -77,7 +94,8 @@ const Coins = () => {
                   </h1>
                 </div>
               </div>
-            ))}
+            ))
+          )}
         </div>
       )}
     </div>

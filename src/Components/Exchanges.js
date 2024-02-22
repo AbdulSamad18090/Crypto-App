@@ -15,6 +15,15 @@ const Exchanges = () => {
     (state) => state.getExchangesSlice
   );
 
+  const searchText = useSelector((state) =>
+    state.searchTextSlice.searchText.toLowerCase()
+  );
+
+  // Filter exchanges based on searchText
+  const filteredExchanges = exchanges.filter((exchange) =>
+    exchange.name.toLowerCase().includes(searchText)
+  );
+
   return (
     <div className="bg-black text-white">
       {loading ? (
@@ -23,26 +32,34 @@ const Exchanges = () => {
         <ErrorPage error={error} />
       ) : (
         <div className="p-2">
-          {exchanges.map(
-            ({
-              id,
-              trust_score_rank,
-              image,
-              name,
-              url,
-              trade_volume_24h_btc,
-              description,
-            }) => (
-              <div key={id}>
-                <MyAccordion
-                  rank={trust_score_rank}
-                  image={image}
-                  name={name}
-                  marketCap={trade_volume_24h_btc}
-                  visitURL={url}
-                  details={description}
-                />
-              </div>
+          {filteredExchanges.length === 0 ? (
+            <div className=" flex justify-center items-center">
+              <h1 className="text-transparent bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text">
+                No Exchanges
+              </h1>
+            </div>
+          ) : (
+            filteredExchanges.map(
+              ({
+                id,
+                trust_score_rank,
+                image,
+                name,
+                url,
+                trade_volume_24h_btc,
+                description,
+              }) => (
+                <div key={id}>
+                  <MyAccordion
+                    rank={trust_score_rank}
+                    image={image}
+                    name={name}
+                    marketCap={trade_volume_24h_btc}
+                    visitURL={url}
+                    details={description}
+                  />
+                </div>
+              )
             )
           )}
         </div>
