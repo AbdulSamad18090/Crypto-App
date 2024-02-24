@@ -1,14 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
-import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchText } from "../Store/Slices/searchTextSlice";
 import { MdOutlineCancel } from "react-icons/md";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const searchText = useSelector((state) => state.searchTextSlice.searchText);
+
+  // Check if the current route is "/coins/:id"
+  const showSearchBar = !location.pathname.startsWith("/coins/");
+
   return (
     <header className="bg-black text-white sticky top-0 z-50 shadow-sm shadow-gray-500">
       <div className="flex justify-between items-center px-4 py-2">
@@ -23,25 +27,27 @@ const Header = () => {
             <FaEthereum className="text-[20px] text-yellow-400" />
           </div>
         </Link>
-        <div className="hidden sm:flex items-center w-60 border border-gray-500 rounded bg-gray-200 text-black">
-          <input
-            type="text"
-            placeholder="Search"
-            className=" w-full bg-transparent focus:outline-none px-2 py-1"
-            value={searchText}
-            onChange={(e) => {
-              dispatch(setSearchText(e.target.value));
-            }}
-          />
-          <MdOutlineCancel
-            className={`text-[20px] mx-2 ${
-              searchText !== "" ? " cursor-pointer" : "hidden"
-            }`}
-            onClick={() => {
-              dispatch(setSearchText(""));
-            }}
-          />
-        </div>
+        {showSearchBar && (
+          <div className="hidden sm:flex items-center w-60 border border-gray-500 rounded bg-gray-200 text-black">
+            <input
+              type="text"
+              placeholder="Search"
+              className=" w-full bg-transparent focus:outline-none px-2 py-1"
+              value={searchText}
+              onChange={(e) => {
+                dispatch(setSearchText(e.target.value));
+              }}
+            />
+            <MdOutlineCancel
+              className={`text-[20px] mx-2 ${
+                searchText !== "" ? " cursor-pointer" : "hidden"
+              }`}
+              onClick={() => {
+                dispatch(setSearchText(""));
+              }}
+            />
+          </div>
+        )}
         <div className="flex justify-center items-center gap-4 transition-all">
           <Link
             to={"/"}
@@ -58,25 +64,27 @@ const Header = () => {
         </div>
       </div>
       <div className="w-full flex justify-center">
-        <div className="sm:hidden flex items-center sm:w-60 mb-4 mx-4 w-full border border-gray-500 rounded bg-gray-200 text-black">
-          <input
-            type="text"
-            placeholder="Search"
-            className=" w-full bg-transparent focus:outline-none px-2 py-1"
-            value={searchText}
-            onChange={(e) => {
-              dispatch(setSearchText(e.target.value));
-            }}
-          />
-          <MdOutlineCancel
-            className={`text-[20px] mx-2 ${
-              searchText !== "" ? " cursor-pointer" : "hidden"
-            }`}
-            onClick={() => {
-              dispatch(setSearchText(""));
-            }}
-          />
-        </div>
+        {showSearchBar && (
+          <div className="sm:hidden flex items-center sm:w-60 mb-4 mx-4 w-full border border-gray-500 rounded bg-gray-200 text-black">
+            <input
+              type="text"
+              placeholder="Search"
+              className=" w-full bg-transparent focus:outline-none px-2 py-1"
+              value={searchText}
+              onChange={(e) => {
+                dispatch(setSearchText(e.target.value));
+              }}
+            />
+            <MdOutlineCancel
+              className={`text-[20px] mx-2 ${
+                searchText !== "" ? " cursor-pointer" : "hidden"
+              }`}
+              onClick={() => {
+                dispatch(setSearchText(""));
+              }}
+            />
+          </div>
+        )}
       </div>
     </header>
   );
