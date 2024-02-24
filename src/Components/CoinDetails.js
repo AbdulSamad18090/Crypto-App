@@ -12,13 +12,11 @@ const CoinDetails = () => {
 
   useEffect(() => {
     dispatch(getCoinDetail(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const { coinDetail, loading, error } = useSelector(
     (state) => state.getCoinDetails
   );
-
-  console.log(coinDetail);
 
   return (
     <div className="text-white flex items-center p-2">
@@ -29,8 +27,8 @@ const CoinDetails = () => {
       ) : (
         <div className="grid md:grid-cols-6 grid-cols-1 w-full">
           {/* Left Side */}
-          <div className=" md:col-span-2 col-span-1 flex flex-col justify-center border p-2">
-            <div className=" flex gap-4 my-4">
+          <div className="md:col-span-2 col-span-1 flex flex-col justify-center border p-2">
+            <div className="flex gap-4 my-4">
               <button
                 className="text-white px-1 rounded bg-gradient-to-r from-purple-500 to-pink-500"
                 onClick={() => {}}
@@ -44,8 +42,8 @@ const CoinDetails = () => {
                 PKR
               </button>
             </div>
-            <div className="">
-            <div className="flex justify-between items-center">
+            <div>
+              <div className="flex justify-between items-center">
                 <h1 className="text-tellow-600 font-bold text-[30px] text-yellow-700">
                   {coinDetail.name}
                 </h1>
@@ -62,7 +60,7 @@ const CoinDetails = () => {
             </div>
           </div>
           {/* Right side - graph */}
-          <div className=" md:col-span-4 col-span-1 flex justify-center items-center border">
+          <div className="md:col-span-4 col-span-1 flex justify-center items-center border">
             <h1>Graph</h1>
           </div>
         </div>
