@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import ErrorPage from "./ErrorPage";
 import { TbActivityHeartbeat } from "react-icons/tb";
-import { FaCaretUp } from "react-icons/fa";
-import { FaCaretDown } from "react-icons/fa";
+import { FaCaretUp, FaCaretDown } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const CoinDetails = () => {
   const { id } = useParams();
@@ -39,8 +39,13 @@ const CoinDetails = () => {
       <div className="text-white flex items-center">
         <div className="grid md:grid-cols-6 grid-cols-1 w-full">
           {/* LeftSide */}
-          <div className="md:col-span-2 col-span-1 flex flex-col justify-center border p-2">
-            <div className="flex gap-4 my-4">
+          <motion.div className="md:col-span-2 col-span-1 flex flex-col justify-center border p-2">
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ type: "spring", damping: 11 }}
+              className="flex gap-4 my-4"
+            >
               <button
                 className="text-white px-1 rounded bg-gradient-to-r from-purple-500 to-pink-500"
                 onClick={() => {
@@ -57,9 +62,14 @@ const CoinDetails = () => {
               >
                 PKR
               </button>
-            </div>
-            <div>
-              <div className="flex justify-between items-center">
+            </motion.div>
+            <motion.div>
+              <motion.div
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="flex justify-between items-center"
+              >
                 <h1 className=" font-bold text-[30px] text-yellow-700">
                   {coinDetail.name}
                 </h1>
@@ -71,12 +81,37 @@ const CoinDetails = () => {
                     #{coinDetail.market_cap_rank}
                   </span>
                 </h1>
-              </div>
-              {renderImage && (
-                <img src={renderImage} alt="img" width={"150px"} />
-              )}
-            </div>
-            <div className="flex justify-between items-center my-2">
+              </motion.div>
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  transition: {
+                    duration: 1,
+                    type: "spring",
+                    damping: 11,
+                  },
+                }}
+              >
+                {renderImage && (
+                  <img src={renderImage} alt="img" width={"150px"} />
+                )}
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              animate={{
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 1,
+                  type: "spring",
+                  damping: 11,
+                },
+              }}
+              className="flex justify-between items-center my-2"
+            >
               {coinDetail.market_data &&
                 coinDetail.market_data.current_price && (
                   <h1 className="text-[25px]">
@@ -110,34 +145,70 @@ const CoinDetails = () => {
                     %
                   </h1>
                 )}
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              animate={{
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 1,
+                  delay: 0.1,
+                  type: "spring",
+                  damping: 11,
+                },
+              }}
+            >
               <span className="text-[20px] text-yellow-700">Market cap: </span>
               <span>{currency.toUpperCase()} </span>
               {coinDetail.market_data?.market_cap[currency]}
-            </div>
-
-            {/* <div className="my-2 text-white">
-            <h1 className="text-[20px] text-yellow-700">Description:</h1>
-            <p
-              dangerouslySetInnerHTML={{ __html: coinDetail.description?.en }}
-              className="text-sm text-gray-700 text-justify"
-            />
-          </div> */}
-          </div>
+            </motion.div>
+          </motion.div>
           {/* Graph */}
           <div className="md:col-span-4 col-span-1 flex justify-center items-center border">
             <h1>Graph</h1>
           </div>
         </div>
       </div>
-      <div className="my-2 text-white p-2">
-        <h1 className="text-[20px] text-yellow-700">Description:</h1>
-        <p
+      <motion.div
+        // initial={{ y: 200 }}
+        // animate={{
+        //   y: 0,
+        //   transition: {
+        //     duration: 1,
+        //     type: "spring",
+        //     damping: 11,
+        //     delayChildren: 0.5, // Delay children animation
+        //   },
+        // }}
+        className="my-2 text-white p-2"
+      >
+        <motion.h1
+          initial={{ y: 200, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            damping: 11,
+            duration: 0.5,
+            delay: 0.1,
+          }}
+          className="text-[20px] text-yellow-700"
+        >
+          Description:
+        </motion.h1>
+        <motion.p
+          initial={{ y: 200, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            damping: 11,
+            duration: 0.5,
+            delay: 0.2,
+          }}
           dangerouslySetInnerHTML={{ __html: coinDetail.description?.en }}
           className="text-sm text-gray-700 text-justify"
         />
-      </div>
+      </motion.div>
     </>
   );
 };
