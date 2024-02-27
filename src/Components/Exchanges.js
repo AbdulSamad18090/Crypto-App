@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import { MyAccordion } from "./Accordion";
 import ErrorPage from "./ErrorPage";
-
+import { motion } from "framer-motion";
 const Exchanges = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,16 +40,24 @@ const Exchanges = () => {
             </div>
           ) : (
             filteredExchanges.map(
-              ({
-                id,
-                trust_score_rank,
-                image,
-                name,
-                url,
-                trade_volume_24h_btc,
-                description,
-              }) => (
-                <div key={id}>
+              (
+                {
+                  id,
+                  trust_score_rank,
+                  image,
+                  name,
+                  url,
+                  trade_volume_24h_btc,
+                  description,
+                },
+                i
+              ) => (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }} // Initial animation styles
+                  animate={{ opacity: 1, y: 0 }} // Animation on load
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  key={id}
+                >
                   <MyAccordion
                     rank={trust_score_rank}
                     image={image}
@@ -58,7 +66,7 @@ const Exchanges = () => {
                     visitURL={url}
                     details={description}
                   />
-                </div>
+                </motion.div>
               )
             )
           )}
