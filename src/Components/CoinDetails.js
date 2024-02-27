@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 import { TbActivityHeartbeat } from "react-icons/tb";
 import { FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { motion } from "framer-motion";
+import CoinChart from "./CoinChart";
 
 const CoinDetails = () => {
   const { id } = useParams();
@@ -20,9 +21,10 @@ const CoinDetails = () => {
     (state) => state.getCoinDetails
   );
 
-  console.log(coinDetail);
+  const { coinChartData } = useSelector((state) => state.getCoinChartSlice);
 
   const [currency, setCurrency] = useState("usd");
+  const [days, setDays] = useState(1);
 
   if (loading) {
     return <Loader />;
@@ -36,10 +38,10 @@ const CoinDetails = () => {
 
   return (
     <>
-      <div className="text-white flex items-center">
+      <div className="text-white flex items-center mt-4">
         <div className="grid md:grid-cols-6 grid-cols-1 w-full">
           {/* LeftSide */}
-          <motion.div className="md:col-span-2 col-span-1 flex flex-col justify-center border p-2">
+          <motion.div className="md:col-span-2 col-span-1 flex flex-col justify-center md:border-r-2 border-gray-600 p-2">
             <motion.div
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -165,24 +167,48 @@ const CoinDetails = () => {
             </motion.div>
           </motion.div>
           {/* Graph */}
-          <div className="md:col-span-4 col-span-1 flex justify-center items-center border">
-            <h1>Graph</h1>
+          <div className="md:col-span-4 col-span-1 flex flex-col justify-center items-center px-2">
+            <CoinChart currency={currency} days={days} />
+            {coinChartData && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { duration: 1 },
+                }}
+                className=" w-full flex justify-end text-black mt-4"
+              >
+                <motion.button
+                  className=" bg-yellow-800 p-1 rounded-l hover:translate-y-1 transition-all w-full"
+                  onClick={() => {
+                    setDays(1);
+                  }}
+                >
+                  24 hours
+                </motion.button>
+                <motion.button
+                  className=" bg-yellow-800 p-1 border-r-2 border-l-2 hover:translate-y-1 transition-all w-full border-black"
+                  onClick={() => {
+                    setDays(30);
+                  }}
+                >
+                  1 Month
+                </motion.button>
+                <motion.button
+                  className=" bg-yellow-800 p-1 rounded-r hover:translate-y-1 transition-all w-full"
+                  onClick={() => {
+                    setDays(365);
+                  }}
+                >
+                  1 Year
+                </motion.button>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
-      <motion.div
-        // initial={{ y: 200 }}
-        // animate={{
-        //   y: 0,
-        //   transition: {
-        //     duration: 1,
-        //     type: "spring",
-        //     damping: 11,
-        //     delayChildren: 0.5, // Delay children animation
-        //   },
-        // }}
-        className="my-2 text-white p-2"
-      >
+      {/* Coin Description */}
+      <motion.div className="my-2 text-white p-2">
         <motion.h1
           initial={{ y: 200, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
