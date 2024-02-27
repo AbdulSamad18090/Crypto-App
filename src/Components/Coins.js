@@ -91,12 +91,12 @@ const Coins = () => {
             filteredCoins.map((coin, i) => (
               <motion.div
                 key={coin.id}
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
                 <Link to={`/coins/${coin.id}`}>
-                  <div className="grid sm:grid-cols-4 grid-cols-2 justify-between items-center border border-gray-600 rounded p-2 my-2 shadow-sm shadow-gray-500">
+                  <div className="grid sm:grid-cols-4 grid-cols-2 justify-between items-center border bg-gray-900 border-gray-600 rounded p-2 my-2 shadow-sm shadow-gray-500">
                     <div className="flex items-center gap-4 mx-2">
                       <img
                         src={coin.image}

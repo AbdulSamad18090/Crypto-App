@@ -43,7 +43,7 @@ export function MyAccordion({
     <>
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
         <AccordionHeader
-          className="text-[17px] text-white hover:text-white font-normal"
+          className="text-[17px] bg-gray-900 my-1 border-b-0 pr-2 text-white hover:text-white  font-normal"
           onClick={() => handleOpen(1)}
         >
           <div className="grid sm:grid-cols-3 grid-cols-2 gap-2 items-center w-full">
